@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# DB
+*.db
+
+# env / secrets
+.env
+
+# uv
+.uv-cache/
+
+# editor
+.vscode/
+
+# frontend
+frontend/node_modules/
+frontend/dist/
