@@ -17,4 +17,4 @@ class ExitResponse(BaseModel):
     status: str
 
     class Config:
-        from_attributes= True
+        from_attributes=True
