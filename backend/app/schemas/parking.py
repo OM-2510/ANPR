@@ -18,3 +18,14 @@ class ExitResponse(BaseModel):
 
     class Config:
         from_attributes=True
+
+class ParkingHistory(BaseModel):
+    id:int
+    plate_number: str
+    entry_time: datetime.datetime
+    exit_time: datetime.datetime
+    amount: float
+    status: str
+
+    class Config:
+        from_attributes=True

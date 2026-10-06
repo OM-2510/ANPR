@@ -2,6 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.schemas.admin import AdminLogin, Token
+from app.schemas.parking import EntryResponse, ParkingHistory
+from app.crud.parking import get_parked_vehicles, get_history, get_stats
 from app.crud.admin import get_admin_by_username
 from app.core.security import verify_password, create_access_token
 from app.deps import get_current_admin
@@ -20,3 +22,18 @@ def admin_login(credentials: AdminLogin,  db: Session=Depends(get_db)):
 @router.get("/admin/me")
 def admin_me(admin=Depends(get_current_admin)):
     return {"username": admin.username}
+
+@router.get("/admin/active", response_model=list[EntryResponse])
+def fetch_parked_vehicles(db: Session=Depends(get_db), admin=Depends(get_current_admin)):
+    vehicles = get_parked_vehicles(db)
+    return vehicles
+
+@router.get("/admin/history", response_model=list[ParkingHistory])
+def fetch_history(db:Session=Depends(get_db), admin=Depends(get_current_admin)):
+    records = get_history(db)
+    return records
+
+@router.get("/admin/stats")
+def fetch_stats(db: Session=Depends(get_db), admin=Depends(get_current_admin)):
+    stats = get_stats(db)
+    return stats
